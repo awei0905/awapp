@@ -8,14 +8,14 @@ on:
 jobs:
   
   build:
-    strategy:
-      matrix:
-        include:
-        - arch: amd64
-          mode: build-and-test
-        - arch: arm64
-          variant : v8
-          mode: build-and-test
+    # strategy:
+    #   matrix:
+    #     include:
+    #     - arch: amd64
+    #       mode: build-and-test
+    #     - arch: arm64
+    #       variant : v8
+    #       mode: build-and-test
     name: Build Image
     runs-on: ubuntu-latest
 
@@ -26,8 +26,8 @@ jobs:
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2.1.0
-      with:
-        platforms: ${{ matrix.arch }}
+      # with:
+      #   platforms: ${{ matrix.arch }}
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2.4.1
 
@@ -48,7 +48,7 @@ jobs:
         push: true
         tags: 372332303365.dkr.ecr.ap-northeast-1.amazonaws.com/sample-app-vuejs:latest
         context: ./sample-app
-        platforms: linux/amd64,linux/arm64/v8
+        platforms: "linux/amd64, linux/arm64/v8"
 
     # - name: Build, tag, and push image to Amazon ECR
     #   env:
