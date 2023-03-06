@@ -1,8 +1,6 @@
 name: Build docker and deploy it to ECR
 
-on:
-  push:
-    branches: [ master ]
+on: workflow_dispatch
 
 jobs:
   
