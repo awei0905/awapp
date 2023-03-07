@@ -99,6 +99,40 @@ https://www.example.com
 > ```
 > 
 
+## 4. 部署專案至 Minikube
+>
+> ```bash
+> # 啟動 minikube
+> $ minikube start
+>
+> 😄  minikube v1.29.0 on Darwin 13.2.1 (arm64)
+> ✨  Automatically selected the docker driver. Other choices: hyperkit, parallels, virtualbox, ssh
+> 📌  Using Docker Desktop driver with root privileges
+> 👍  Starting control plane node minikube in cluster minikube
+> 🚜  Pulling base image ...
+> 🔥  Creating docker container (CPUs=2, Memory=4000MB) ...
+> 🐳  Preparing Kubernetes v1.26.1 on Docker 20.10.23 ...
+>     ▪ Generating certificates and keys ...
+>     ▪ Booting up control plane ...
+>     ▪ Configuring RBAC rules ...
+> 🔗  Configuring bridge CNI (Container Networking Interface) ...
+>     ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+> 🔎  Verifying Kubernetes components...
+> 🌟  Enabled addons: storage-provisioner, default-storageclass
+> 🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+> 
+> # 透過 k8s 部署應用程式到 minikube
+> $ kubectl apply -f deploy.yaml
+> 
+> 
+> # 建立一個路由連到 LoadBalancer (ingress)，開著不要關閉。
+> $ minikube tunnel
+> 
+> ✅  Tunnel successfully started
+> 📌  NOTE: Please do not close this terminal as this process must stay alive for the tunnel to be accessible ...
+> # 如何關閉tunnel? Ctrl + C !
+> ```
+>
 
 # License
 See [LICENSE.md](/LICENSE.md)
