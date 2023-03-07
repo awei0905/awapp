@@ -101,4 +101,4 @@ https://www.example.com
 
 
 # License
-See LICENSE.md
+See [LICENSE.md](/LICENSE.md)
