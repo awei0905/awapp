@@ -45,11 +45,14 @@ https://www.example.com
 # Screenshots
 
 # About APP
-## 用來練習的 Side project，簡易的購物網中。
-## 使用容器化開發，使應用程式具備高彈性、高擴展性、簡化部署，而分使用虛擬機器的架構。
-## 本專案包含購物網站的基本要素，例如會員、購物車、訂單、商品列表和報表功能。
 <br />
 
+* 用來練習的 Side project，簡易的購物網中。\
+  使用容器化開發，使應用程式具備高彈性、高擴展性、簡化部署，而分使用虛擬機器的架構。
+* 本專案包含購物網站的基本要素，例如會員、購物車、訂單、商品列表和報表功能。\
+<br />
+
+---
 ## Environment:
 * ARM64 macOS (Apple M1 Pro)
 * Storage: at least 20GB
