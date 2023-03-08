@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+    db:
+        image: postgres:14.7
+        restart: always
+        environment:
+            POSTGRES_DB: postgres
+            POSTGRES_USER: usr #postgres
+            POSTGRES_PASSWORD: pass #1234
+            PGDATA: /var/lib/postgresql/data
+        volumes:
+            - ./.docker/postgresql_data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+    pgadmin:
+        image: dpage/pgadmin4:latest
+        restart: always
+        environment:
+            PGADMIN_DEFAULT_EMAIL: awei0905@gmail.com #xxx@gmail
+            PGADMIN_DEFAULT_PASSWORD: pass
+            PGADMIN_LISTEN_PORT: 80
+        ports:
+            - "8080:80"
+        volumes:
+            - ./.docker/pgadmin_data:/var/lib/pgadmin
+        links:
+            - "db:pgsql-server"
