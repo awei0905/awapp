@@ -52,7 +52,6 @@ https://www.example.com
 * 本專案包含購物網站的基本要素，例如會員、購物車、訂單、商品列表和報表功能。\
 <br />
 
----
 ## Environment:
 * ARM64 macOS (Apple M1 Pro)
 * Storage: at least 20GB
