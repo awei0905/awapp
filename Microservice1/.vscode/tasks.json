@@ -36,6 +36,23 @@
                 "${workspaceFolder}/awapp.csproj"
             ],
             "problemMatcher": "$msCompile"
+        }, 
+        {
+            "label": "dbcontext",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "ef",
+                "dbcontext",
+                "scaffold",
+                "Name=ConnectionStrings:postgres",
+                "Npgsql.EntityFrameworkCore.PostgreSQL",
+                "-o",
+                "Data",
+                "-c",
+                "ApplicationDbContext"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }
