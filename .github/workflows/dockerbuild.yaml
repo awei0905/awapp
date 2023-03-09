@@ -1,4 +1,4 @@
-name: Build docker and deploy it to ECR
+name: Build docker and deploy it to Docker Hub
 
 on: workflow_dispatch
 
