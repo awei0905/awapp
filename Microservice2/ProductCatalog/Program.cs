@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ProductCatalog.Data;
+using ProductCatalog.Seeders;
 
 namespace ProductCatalog;
 
@@ -21,6 +22,15 @@ public class Program
             options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")
         ));
         var app = builder.Build();
+        
+        
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            var context = services.GetService<ApplicationDbContext>();
+            DataSeeder seeder = new DataSeeder(context);
+            seeder.SeedProductsAndProductCatalogTypes();
+        }
 
         // Configure the HTTP request pipeline.
        
