@@ -45,12 +45,13 @@
                 "ef",
                 "dbcontext",
                 "scaffold",
-                "Name=ConnectionStrings:postgres",
+                "Server=localhost;Port=5432;Database=postgres;User Id=usr;Password=pass",
                 "Npgsql.EntityFrameworkCore.PostgreSQL",
                 "-o",
-                "Data",
+                "Data1",
                 "-c",
-                "ApplicationDbContext"
+                "ApplicationDbContext",
+                "--no-onconfiguring"
             ],
             "problemMatcher": "$msCompile"
         }

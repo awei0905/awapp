@@ -21,4 +21,12 @@ public class PersonController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> OnPost([FromBody] string bodyObj) 
+    {
+
+        return Ok();
+    }
+
 }
