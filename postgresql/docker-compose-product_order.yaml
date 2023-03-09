@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+    product_order_postgres:
+        image: postgres:14.7
+        restart: always
+        container_name: product_order_postgres
+        environment:
+            POSTGRES_DB: postgres
+            POSTGRES_USER: usr #postgres
+            POSTGRES_PASSWORD: pass #1234
+            PGDATA: /var/lib/postgresql/data
+        volumes:
+            - ./.docker/product_order_postgresql_data:/var/lib/postgresql/data
+        ports:
+            - "10124:5432"
