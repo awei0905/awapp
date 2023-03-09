@@ -9,9 +9,10 @@ namespace ProductCatalog.Data
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public decimal Price { get; set; }
-        public string PictureFileName { get; set; } = null!;
         public int ProductCatalogTypeId { get; set; }
+        public int Quantity { get; set; }
+        public string ImageUrl { get; set; } = null!;
 
-        public virtual ProductCatalogType ProductCatalogType { get; set; } = null!;
+        public virtual ProductType ProductCatalogType { get; set; } = null!;
     }
 }
