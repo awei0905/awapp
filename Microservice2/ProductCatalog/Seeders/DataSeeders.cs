@@ -11,22 +11,48 @@ public class DataSeeder {
 
     public void SeedProductsAndProductCatalogTypes() {
         if(!_dbContext.ProductItems.Any()) {
-            var productsCatalogTypes = new List<ProductType> {
+            var productTypes = new List<ProductType> {
                 new ProductType {
-                    Name = "養身產品",
+                    ProductTypeId = 1,
+                    Name = "平民美食",
+                },
+                new ProductType {
+                    ProductTypeId = 2,
+                    Name = "養身",
                 },
             };
-            var products = new List<ProductItem> {
+            var productItems = new List<ProductItem> {
                 new ProductItem {
                     Name = "貴格超大便當",
                     Description = "要不要注意膽固醇。",
-                    // = "https://example.com",
-                    Price = 100,
-                    ProductCatalogTypeId = 1,                    
+                    ImageUrl = "https://i.imgur.com/r4lq4Ad.jpg",
+                    Price = 100,                  
+                },
+                new ProductItem {
+                    Name = "貴格超大燕麥",
+                    Description = "要不要注意體脂肪。",
+                    ImageUrl = "https://i.imgur.com/r4lq4Ad.jpg",
+                    Price = 150,                 
                 },
             };
-            _dbContext.ProductTypes.AddRange(productsCatalogTypes);
-            _dbContext.ProductItems.AddRange(products);
+            var productItemTypes = new List<ProductItemType> { 
+                new ProductItemType {
+                    ProductItemId = 1,
+                    ProductTypeId = 1,
+                },
+                new ProductItemType {
+                    ProductItemId = 1,
+                    ProductTypeId = 2,
+                },
+                new ProductItemType {
+                    ProductItemId = 2,
+                    ProductTypeId = 2,
+                },
+            };
+
+            _dbContext.ProductTypes.AddRange(productTypes);
+            _dbContext.ProductItems.AddRange(productItems);
+            _dbContext.ProductItemTypes.AddRange(productItemTypes);
             _dbContext.SaveChanges();
         }
     }
