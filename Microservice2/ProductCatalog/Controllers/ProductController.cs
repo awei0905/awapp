@@ -16,14 +16,17 @@ public class ProductController : ControllerBase
     private readonly ILogger<ProductController> _logger;
     private readonly IProductItemRepository _productItemRepository;
     private readonly IProductTypeRepository _productTypeRepository;
+    private readonly IProductItemTypeRepository _productItemTypeRepository;
 
     public ProductController(ILogger<ProductController> logger,
     IProductItemRepository productItemRepository,
-    IProductTypeRepository productTypeRepository)
+    IProductTypeRepository productTypeRepository,
+    IProductItemTypeRepository productItemTypeRepository)
     {
         _logger = logger;
         _productItemRepository = productItemRepository;
         _productTypeRepository = productTypeRepository;
+        _productItemTypeRepository = productItemTypeRepository;
     }
 
     /// <summary>
@@ -33,11 +36,11 @@ public class ProductController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetProducts()
     {
-        List<ProductGetAllDTO> returnProducts = new List<ProductGetAllDTO>();
+        List<ProductGetDTO> returnProducts = new List<ProductGetDTO>();
         IEnumerable<ProductItem> products = await _productItemRepository.GetAllAsync();
         
         foreach(var product in products) {
-            ProductGetAllDTO returnProduct = new ProductGetAllDTO { 
+            ProductGetDTO returnProduct = new ProductGetDTO { 
                 Id = product.ProductItemId,
                 Name = product.Name,
                 Description = product.Description,
@@ -45,7 +48,13 @@ public class ProductController : ControllerBase
                 Quantity = product.Quantity,
                 ImageUrl = product.ImageUrl,
             };
-            IEnumerable<ProductType> productTypes = await _productTypeRepository.GetAllAsync(x => true);
+            IEnumerable<ProductItemType> productItemTypes = await _productItemTypeRepository
+                .GetAllAsync(product.ProductItemId);
+            IEnumerable<ProductType> productTypes = await _productTypeRepository
+                .GetAllAsync(x => productItemTypes
+                    .Select(o => o.ProductTypeId)
+                    .Contains(x.ProductTypeId)
+                );
             returnProduct.ProductType = productTypes.Select(x => x.Name);
             returnProducts.Add(returnProduct);
         }
@@ -61,8 +70,29 @@ public class ProductController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetProduct([FromRoute] int id)
     {
-        var product = await _productItemRepository.GetAsync(x => x.ProductItemId == id);
-        return Ok(product);
+        ProductItem product = await _productItemRepository.GetAsync(x => x.ProductItemId == id);
+        if(product == default)
+            return NotFound();
+
+        ProductGetDTO returnProduct = new ProductGetDTO { 
+            Id = product.ProductItemId,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+            Quantity = product.Quantity,
+            ImageUrl = product.ImageUrl,
+        };
+
+        IEnumerable<ProductItemType> productItemTypes = await _productItemTypeRepository
+            .GetAllAsync(product.ProductItemId);
+        IEnumerable<ProductType> productTypes = await _productTypeRepository
+            .GetAllAsync(x => productItemTypes
+                .Select(o => o.ProductTypeId)
+                .Contains(x.ProductTypeId)
+            );
+        returnProduct.ProductType = productTypes.Select(x => x.Name);
+        
+        return Ok(returnProduct);
     }
 
     /// <summary>

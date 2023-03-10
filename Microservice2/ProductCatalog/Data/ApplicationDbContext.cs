@@ -17,8 +17,8 @@ namespace ProductCatalog.Data
         }
 
         public virtual DbSet<ProductItem> ProductItems { get; set; } = null!;
+        public virtual DbSet<ProductItemType> ProductItemTypes { get; set; } = null!;
         public virtual DbSet<ProductType> ProductTypes { get; set; } = null!;
-        public object ProductType { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,28 +35,37 @@ namespace ProductCatalog.Data
                     .HasDefaultValueSql("''::character varying");
 
                 entity.Property(e => e.Name).HasMaxLength(100);
+            });
 
-                entity.Property(e => e.ProductCatalogTypeId).HasDefaultValueSql("nextval('\"ProductItem_productcatalogtypeid_seq\"'::regclass)");
+            modelBuilder.Entity<ProductItemType>(entity =>
+            {
+                entity.ToTable("ProductItemType");
 
-                entity.HasOne(d => d.ProductCatalogType)
-                    .WithMany(p => p.ProductItems)
-                    .HasForeignKey(d => d.ProductCatalogTypeId)
+                entity.HasIndex(e => new { e.ProductItemId, e.ProductTypeId }, "productitemtype_productid_idx")
+                    .IsUnique();
+
+                entity.Property(e => e.ProductItemTypeId).HasDefaultValueSql("nextval('productitemtype_productitemtypeid_seq'::regclass)");
+
+                entity.HasOne(d => d.ProductItem)
+                    .WithMany(p => p.ProductItemTypes)
+                    .HasForeignKey(d => d.ProductItemId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("productitem_fk");
+                    .HasConstraintName("productitemtype_fk");
+
+                entity.HasOne(d => d.ProductType)
+                    .WithMany(p => p.ProductItemTypes)
+                    .HasForeignKey(d => d.ProductTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("productitemtype_fk_1");
             });
 
             modelBuilder.Entity<ProductType>(entity =>
             {
-                entity.HasKey(e => e.ProductCatelogId)
-                    .HasName("productcatalogtype_pk");
-
                 entity.ToTable("ProductType");
 
-                entity.Property(e => e.ProductCatelogId).HasDefaultValueSql("nextval('productcatalogtype_id_seq'::regclass)");
+                entity.Property(e => e.ProductTypeId).HasDefaultValueSql("nextval('productcatalogtype_id_seq'::regclass)");
 
-                entity.Property(e => e.Name)
-                    .HasMaxLength(100)
-                    .HasColumnName("name");
+                entity.Property(e => e.Name).HasMaxLength(100);
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -7,12 +7,12 @@ namespace ProductCatalog.Data
     {
         public ProductType()
         {
-            ProductItems = new HashSet<ProductItem>();
+            ProductItemTypes = new HashSet<ProductItemType>();
         }
 
-        public int ProductCatelogId { get; set; }
+        public int ProductTypeId { get; set; }
         public string Name { get; set; } = null!;
 
-        public virtual ICollection<ProductItem> ProductItems { get; set; }
+        public virtual ICollection<ProductItemType> ProductItemTypes { get; set; }
     }
 }
