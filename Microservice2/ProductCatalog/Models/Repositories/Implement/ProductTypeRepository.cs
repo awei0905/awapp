@@ -37,7 +37,6 @@ public class ProductTypeRepository : IProductTypeRepository
         IEnumerable<ProductType> productTypes;
         if (predicate == default)
             productTypes = await _dbContext.ProductTypes
-            .OrderBy(x => x.ProductCatelogId)
             .ToListAsync();
         else
             productTypes = await _dbContext.ProductTypes
