@@ -12,20 +12,11 @@ public class ProductItemTypeRepository : IProductItemTypeRepository
 {
     private readonly ApplicationDbContext _dbContext;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="dbContext"></param>
     public ProductItemTypeRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
-
-    public async Task<int> AddAsync(ProductItemType entity)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public async Task<IEnumerable<ProductItemType>> GetAllAsync(int productionItemId)
     {
         var productItemTypes = await _dbContext.ProductItemTypes
@@ -35,13 +26,19 @@ public class ProductItemTypeRepository : IProductItemTypeRepository
         return productItemTypes;
     }
 
-    public async Task<int> RemoveAsync(ProductItemType entity)
+    public async Task<int> RemoveRangeAsync(IEnumerable<ProductItemType> entities)
     {
-        throw new NotImplementedException();
+        _dbContext.ProductItemTypes.RemoveRange(entities);
+        int saveReturnValue = await _dbContext.SaveChangesAsync();
+
+        return saveReturnValue;
     }
 
-    public async Task<int> UpdateAsync(ProductItemType entity)
+    public async Task<int> AddRangeAsync(IEnumerable<ProductItemType> entities)
     {
-        throw new NotImplementedException();
+        await _dbContext.ProductItemTypes.AddRangeAsync(entities);
+        int saveReturnValue = await _dbContext.SaveChangesAsync();
+
+        return saveReturnValue;
     }
 }

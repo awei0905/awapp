@@ -8,12 +8,6 @@ namespace ProductCatalog.Models.Repositories.Interfaces;
 public interface IProductItemTypeRepository
 {
     /// <summary>
-    /// 新增實體
-    /// </summary>
-    /// <param name="entity">實體</param>
-    Task<int> AddAsync(ProductItemType entity);
-
-    /// <summary>
     /// 取得全部實體
     /// </summary>
     /// <returns></returns>
@@ -22,12 +16,12 @@ public interface IProductItemTypeRepository
     /// <summary>
     /// 刪除一個實體
     /// </summary>
-    /// <param name="entity">實體</param>
-    Task<int> RemoveAsync(ProductItemType entity);
+    /// <param name="entities">實體</param>
+    Task<int> RemoveRangeAsync(IEnumerable<ProductItemType> entities);
 
     /// <summary>
     /// 更新一個實體
     /// </summary>
-    /// <param name="entity">實體</param>
-    Task<int> UpdateAsync(ProductItemType entity);
+    /// <param name="entities">實體</param>
+    Task<int> AddRangeAsync(IEnumerable<ProductItemType> entities);
 }

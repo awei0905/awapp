@@ -19,9 +19,11 @@ public class ProductTypeRepository : IProductTypeRepository
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
-    public async Task<int> AddAsync(ProductType entity)
+    public async Task<int> AddRangeIfNotExistedAsync(IEnumerable<ProductType> entities)
     {
-        await _dbContext.ProductTypes.AddAsync(entity);
+        
+
+        await _dbContext.ProductTypes.AddRangeAsync(entities);
         int saveChangeReturn = await _dbContext.SaveChangesAsync();
 
         return saveChangeReturn;
@@ -44,43 +46,5 @@ public class ProductTypeRepository : IProductTypeRepository
             .ToListAsync();
 
         return productTypes;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="predicate"></param>
-    /// <returns></returns>
-    public async Task<ProductType> GetAsync(Expression<Func<ProductType, bool>> predicate)
-    {
-        ProductType? productTypes = await _dbContext.ProductTypes.FirstOrDefaultAsync(predicate);
-
-        return productTypes;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <returns></returns>
-    public async Task<int> RemoveAsync(ProductType entity)
-    {
-        _dbContext.Entry(entity).State = EntityState.Deleted;
-        int saveChangeReturn = await _dbContext.SaveChangesAsync();
-
-        return saveChangeReturn;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <returns></returns>
-    public async Task<int> UpdateAsync(ProductType entity)
-    {
-        _dbContext.Entry(entity).State = EntityState.Modified;
-        int saveChangeReturn = await _dbContext.SaveChangesAsync();
-
-        return saveChangeReturn;
     }
 }
