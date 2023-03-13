@@ -41,8 +41,6 @@ public class Program
 
         // DI 註冊
         builder.Services.AddScoped<IProductItemRepository, ProductItemRepository>();
-        builder.Services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
-        builder.Services.AddScoped<IProductItemTypeRepository, ProductItemTypeRepository>();
 
         var app = builder.Build();
 

@@ -24,9 +24,5 @@ public class ProductCreateDTOValidator : AbstractValidator<ProductCreateParam>
         RuleFor(x => x.ImageUrl)
         .NotEmpty()
         .ValidateUri();
-        RuleForEach(p => p.Types).ChildRules(child =>
-        {
-            child.RuleFor(x => x).NotEmpty();
-        });
     }
 }

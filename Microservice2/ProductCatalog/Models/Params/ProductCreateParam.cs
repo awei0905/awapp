@@ -7,5 +7,4 @@ public class ProductCreateParam
     public decimal Price { get; set; }
     public int Quantity { get; set; }
     public string ImageUrl { get; set; } = null!;
-    public IEnumerable<string> Types { get; set; } = null!;
 }
